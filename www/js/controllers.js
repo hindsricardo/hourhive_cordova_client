@@ -23,8 +23,8 @@ angular.module('bucketList.controllers', ['bucketList.services'])
             email: email,
             password: password
         }).success(function (data) {
-            $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
+            $rootScope.setToken(email); // create a session kind of thing on the client side
             $window.location.href = ('#/bucket/list');
         }).error(function (error) {
             $rootScope.hide();
@@ -55,8 +55,8 @@ angular.module('bucketList.controllers', ['bucketList.services'])
             password: password,
             name: uName
         }).success(function (data) {
-            $rootScope.setToken(email); // create a session kind of thing on the client side
             $rootScope.hide();
+            $rootScope.setToken(email); // create a session kind of thing on the client side
             $window.location.href = ('#/bucket/list');
         }).error(function (error) {
             $rootScope.hide();
@@ -71,12 +71,57 @@ angular.module('bucketList.controllers', ['bucketList.services'])
             
         });
     }
+        $scope.createOrg = function () {
+            var staff = {
+                email : this.user.email,
+                password : this.user.password,
+                uName : this.user.name,
+                level : "1"
+            }
+            var orgName = this.user.orgName;
+            var orgType = this.user.orgType;
+            var street = this.user.street;
+            var city = this.user.city;
+            var state = this.user.state;
+            var zip = this.user.zip;
+
+            if(!staff.email || !staff.password || !staff.uName || !orgName || !orgType) {
+                $rootScope.notify("Please enter valid data");
+                return false;
+            }
+            $rootScope.show('Please wait.. Registering');
+            API.signupOrg({
+                orgName: orgName,
+                orgType: orgType,
+                street: street,
+                city : city,
+                state: state,
+                zip : zip,
+                staff: [staff],
+                verified: false
+            }).success(function (data) {
+                $rootScope.hide();
+                $rootScope.setToken(staff.email); // create a session kind of thing on the client side
+                $window.location.href = ('#/bucket/list');
+            }).error(function (error) {
+                $rootScope.hide();
+                if(error.error && error.error.code == 11000)
+                {
+                    $rootScope.notify("A user with this email already exists");
+                }
+                else
+                {
+                    $rootScope.notify("Oops something went wrong, Please try again!");
+                }
+
+            });
+        }
 })
 
 .controller('myListCtrl', function ($rootScope, $scope, API, $timeout, $ionicModal, $window) {
     $rootScope.$on('fetchAll', function(){
             API.getAll($rootScope.getToken()).success(function (data, status, headers, config) {
-            $rootScope.show("Please wait... Processing");
+            //$rootScope.show("Please wait... Processing");
             $scope.list = [];
             for (var i = 0; i < data.length; i++) {
                 if (data[i].isCompleted == false) {
@@ -199,7 +244,7 @@ angular.module('bucketList.controllers', ['bucketList.services'])
             $scope.modal.hide();
             $rootScope.show();
             
-            $rootScope.show("Please wait... Creating new");
+            //$rootScope.show("Please wait... Creating new");
 
             var form = {
                 item: item,

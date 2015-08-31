@@ -1,4 +1,4 @@
-angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.services'])
+angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.services','ngCordova'])
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
             if (window.StatusBar) {
