@@ -24,7 +24,7 @@ angular.module('bucketList.controllers', ['bucketList.services'])
             password: password
         }).success(function (data) {
             $rootScope.hide();
-            $rootScope.setToken(data); // create a session kind of thing on the client side
+            $rootScope.setToken(email); // create a session kind of thing on the client side
             $window.location.href = ('#/bucket/list');
         }).error(function (error) {
             $rootScope.hide();
@@ -47,7 +47,7 @@ angular.module('bucketList.controllers', ['bucketList.services'])
             password: password
         }).success(function (data) {
             $rootScope.hide();
-            $rootScope.setToken(data);
+            $rootScope.setToken(email);
             $window.location.href = ('#/bucket/list');
         }).error(function (error) {
             $rootScope.hide();
