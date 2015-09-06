@@ -53,7 +53,7 @@ angular.module('bucketList.services', [])
                 return $http.post(base+'/api/v1/bucketList/auth/login', form);
 
             },
-            signinOrg: function (form) {
+            signinStaff: function (form) {
                 return $http.post(base+'/api/v1/bucketList/org/auth/login', form);
 
             },
@@ -65,11 +65,11 @@ angular.module('bucketList.services', [])
                 return $http.post(base+'/api/v1/bucketList/org/auth/register', form);
 
             },
-            getAll: function (email) {
+            getAll: function (session) {
                 return $http.get(base+'/api/v1/bucketList/data/list', {
                     method: 'GET',
                     params: {
-                        token: email
+                        token: session.email
                     }
                 });
             },

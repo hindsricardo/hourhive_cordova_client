@@ -23,6 +23,15 @@ angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.ser
                     }
                 }
             })
+            .state('auth.signinOrg', {
+                url: '/signinOrg',
+                views: {
+                    'auth-signinOrg': {
+                        templateUrl: 'templates/auth-signinOrg.html',
+                        controller: 'SignInCtrl'
+                    }
+                }
+            })
             .state('auth.signup', {
                 url: '/signup',
                 views: {
@@ -32,25 +41,48 @@ angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.ser
                     }
                 }
             })
+            .state('auth.signupOrg', {
+                url: '/signupOrg',
+                views: {
+                    'auth-signupOrg': {
+                        templateUrl: 'templates/auth-signupOrg.html',
+                        controller: 'SignUpCtrl'
+                    }
+                }
+            })
             .state('bucket', {
                 url: "/bucket",
                 abstract: true,
                 templateUrl: "templates/bucket.html"
-            })
-            .state('bucket.list', {
-                url: '/list',
-                views: {
-                    'bucket-list': {
-                        templateUrl: 'templates/bucket-list.html',
-                        controller: 'myListCtrl'
-                    }
-                }
             })
             .state('bucket.completed', {
                 url: '/completed',
                 views: {
                     'bucket-completed': {
                         templateUrl: 'templates/bucket-completed.html',
+                        controller: 'completedCtrl'
+                    }
+                }
+            })
+            .state('org', {
+                url: "/org",
+                abstract: true,
+                templateUrl: "templates/org.html"
+            })
+            .state('org.list', {
+                url: '/list',
+                views: {
+                    'bucket-list': {
+                        templateUrl: 'templates/org-list.html',
+                        controller: 'myListCtrl'
+                    }
+                }
+            })
+            .state('org.edit', {
+                url: '/edit',
+                views: {
+                    'bucket-completed': {
+                        templateUrl: 'templates/org-edit.html',
                         controller: 'completedCtrl'
                     }
                 }

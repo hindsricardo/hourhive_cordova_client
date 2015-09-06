@@ -1,6 +1,6 @@
 angular.module('bucketList.controllers', ['bucketList.services'])
 
-.controller('SignInCtrl', function ($rootScope, $scope, API, $window) {
+.controller('SignInCtrl',['$rootScope', '$scope', 'API', '$window', function ($rootScope, $scope, API, $window) {
     // if the user is already logged in, take him to his bucketlist
     if ($rootScope.isSessionActive()) {
         $window.location.href = ('#/bucket/list');
@@ -24,7 +24,7 @@ angular.module('bucketList.controllers', ['bucketList.services'])
             password: password
         }).success(function (data) {
             $rootScope.hide();
-            $rootScope.setToken(email); // create a session kind of thing on the client side
+            $rootScope.setToken(data); // create a session kind of thing on the client side
             $window.location.href = ('#/bucket/list');
         }).error(function (error) {
             $rootScope.hide();
@@ -32,9 +32,32 @@ angular.module('bucketList.controllers', ['bucketList.services'])
         });
     }
 
-})
+    $scope.validateStaff = function () {
+        var accountUsername = this.user.accountUsername.toLocaleLowerCase().trim();
+        var email = this.user.email;
+        var password = this.user.password;
+        if(!email || !password || !accountUsername) {
+            $rootScope.notify("Please enter valid credentials");
+            return false;
+        }
+        $rootScope.show('Please wait.. Authenticating');
+        API.signinStaff({
+            accountUsername:accountUsername,
+            email: email,
+            password: password
+        }).success(function (data) {
+            $rootScope.hide();
+            $rootScope.setToken(data);
+            $window.location.href = ('#/bucket/list');
+        }).error(function (error) {
+            $rootScope.hide();
+            $rootScope.notify("Invalid Username or password");
+        });
+    }
 
-.controller('SignUpCtrl', function ($rootScope, $scope, API, $window) {
+}])
+
+.controller('SignUpCtrl',['$rootScope','$scope','API','$window', function ($rootScope, $scope, API, $window){
     $scope.user = {
         email: "",
         password: "",
@@ -42,7 +65,7 @@ angular.module('bucketList.controllers', ['bucketList.services'])
     };
 
     $scope.createUser = function () {
-    	var email = this.user.email;
+    	var email = this.user.email.toLowerCase();
         var password = this.user.password;
         var uName = this.user.name;
         if(!email || !password || !uName) {
@@ -78,15 +101,24 @@ angular.module('bucketList.controllers', ['bucketList.services'])
                 uName : this.user.name,
                 level : "1"
             }
-            var orgName = this.user.orgName;
+            var orgName = this.user.orgName.toLowerCase();
             var orgType = this.user.orgType;
+            var accountUsername = this.user.accountUsername.toLowerCase().trim();
             var street = this.user.street;
             var city = this.user.city;
             var state = this.user.state;
             var zip = this.user.zip;
 
-            if(!staff.email || !staff.password || !staff.uName || !orgName || !orgType) {
+            if(!staff.email || !staff.password || !staff.uName || !orgName || !orgType || !accountUsername) {
                 $rootScope.notify("Please enter valid data");
+                return false;
+            }
+            if(zip.length > 5){
+                $rootScope.notify("Please enter only 5 digits for your zipcode");
+                return false;
+            }
+            if(!street || !city || !state || !zip){
+                $rootScope.notify("Please enter a valid address");
                 return false;
             }
             $rootScope.show('Please wait.. Registering');
@@ -97,6 +129,7 @@ angular.module('bucketList.controllers', ['bucketList.services'])
                 city : city,
                 state: state,
                 zip : zip,
+                accountUsername :accountUsername,
                 staff: [staff],
                 verified: false
             }).success(function (data) {
@@ -116,9 +149,11 @@ angular.module('bucketList.controllers', ['bucketList.services'])
 
             });
         }
-})
+}])
 
 .controller('myListCtrl', function ($rootScope, $scope, API, $timeout, $ionicModal, $window) {
+
+        $scope.session = $rootScope.getToken(); //Define session to be used to filter view.
     $rootScope.$on('fetchAll', function(){
             API.getAll($rootScope.getToken()).success(function (data, status, headers, config) {
             $rootScope.show("Please wait... Processing");
