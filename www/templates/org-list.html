@@ -1,4 +1,7 @@
 <ion-header-bar class="bar bar-header bar-positive">
+        <div class="buttons button-clear">
+            <button class="button" ng-click="newTask()">New</button>
+        </div>
        <h1 class="title">My List</h1>
        <button class="button button-clear" ng-click="logout()">Logout</button>
 </ion-header-bar>
@@ -17,9 +20,9 @@
       </div>
    </div>
    <div class="card" >
-     <div class="item item-text-wrap" ng-show="noData">
+      <div class="item item-text-wrap" ng-show="noData">
          <span>
-         No Resources listed at the moment. <!--Click  <a href="javascript:" ng-click="newTask()">Here</a> and create one -->
+         No Items in your bucket List. Click  <a href="javascript:" ng-click="newTask()">Here</a> and create one
          </span>
       </div>
    </div>

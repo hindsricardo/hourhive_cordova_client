@@ -30,6 +30,8 @@ angular.module('bucketList.services', [])
         $rootScope.doRefresh = function (tab) {
             if(tab == 1)
                 $rootScope.$broadcast('fetchAll');
+            else if(tab == 2)
+                $rootScope.$broadcast('fetchMy');
             else
                 $rootScope.$broadcast('fetchCompleted');
             
@@ -69,9 +71,17 @@ angular.module('bucketList.services', [])
                 return $http.get(base+'/api/v1/bucketList/data/list', {
                     method: 'GET',
                     params: {
-                        token: session.email
+                        token: session
                     }
                 });
+            },
+            getYourList: function(session){
+                return $http.get(base+'/api/v1/bucketList/org/data/list',{
+                    method: 'GET',
+                    params: {
+                        token: session
+                    }
+                })
             },
             getOne: function (id, email) {
                 return $http.get(base+'/api/v1/bucketList/data/item/' + id, {
@@ -104,6 +114,23 @@ angular.module('bucketList.services', [])
                         token: email
                     }
                 });
+            },
+            getappUser: function (session) {
+                return $http.get(base+'/api/v1/bucketList/data/user', {
+                    method: 'GET',
+                    params: {
+                        token: session
+                    }
+                })
+            },
+            getActivity: function (session) {
+                return $http.get(base+'/api/v1/bucketList/data/activity',{
+                    method: 'GET',
+                    params: {
+                        token: session
+                    }
+                })
             }
+
         }
     });

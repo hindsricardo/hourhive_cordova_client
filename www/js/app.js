@@ -55,12 +55,40 @@ angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.ser
                 abstract: true,
                 templateUrl: "templates/bucket.html"
             })
+
+            .state('bucket.list', {
+                url: '/list',
+                views: {
+                    'bucket-list': {
+                        templateUrl: 'templates/bucket-list.html',
+                        controller: 'allListCtrl'
+                    }
+                }
+            })
             .state('bucket.completed', {
                 url: '/completed',
                 views: {
                     'bucket-completed': {
                         templateUrl: 'templates/bucket-completed.html',
                         controller: 'completedCtrl'
+                    }
+                }
+            })
+            .state('bucket.myprofile', {
+                url: '/myprofile',
+                views: {
+                    'bucket-profile': {
+                        templateUrl: 'templates/bucket-myprofile.html',
+                        controller: 'myProfileCtrl'
+                    }
+                }
+            })
+            .state('bucket.edit', {
+                url: '/edit',
+                views: {
+                    'bucket-edit': {
+                        templateUrl: 'templates/bucket-edit.html',
+                        controller: 'editProfileCtrl'
                     }
                 }
             })
@@ -72,7 +100,7 @@ angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.ser
             .state('org.list', {
                 url: '/list',
                 views: {
-                    'bucket-list': {
+                    'org-list': {
                         templateUrl: 'templates/org-list.html',
                         controller: 'myListCtrl'
                     }
@@ -81,7 +109,7 @@ angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.ser
             .state('org.edit', {
                 url: '/edit',
                 views: {
-                    'bucket-completed': {
+                    'org-edit': {
                         templateUrl: 'templates/org-edit.html',
                         controller: 'completedCtrl'
                     }

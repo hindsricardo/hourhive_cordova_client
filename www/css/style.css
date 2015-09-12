@@ -1,6 +1,6 @@
 .margin {
-    margin - left: 9px;
-    margin - right: 9px;
+    margin-left: 9px;
+    margin-right: 9px;
 }
 
 .icon-actions {
@@ -24,3 +24,25 @@
 {
 	margin-right: 35px;
 }
+a
+{
+    text-decoration: none;
+}
+
+textarea
+{
+    width:100%
+}
+
+.ion-arrow-left-c
+{
+    color: white;
+}
+
+
+/* MY PROFILE SECTION*/
+.myprofileHeaderBox {
+    background:#CEECF5;
+}
+
+

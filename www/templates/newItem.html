@@ -1,10 +1,32 @@
 <div class="modal slide-in-up" ng-controller="newCtrl">
    <header class="bar bar-header bar-secondary">
       <button class="button button-clear button-primary" ng-click="close()">Cancel</button>
-      <h1 class="title">New Item</h1>
+      <h1 class="title">List Resource</h1>
       <button class="button button-positive" ng-click="createNew()">Done</button>
    </header>
    <ion-content class="padding has-header">
-      <input type="text" placeholder="I need to do..." ng-model="data.item">
+       <label class="item item-input"> Title
+           <input type="text" class="text-center" placeholder=" Give it a name that makes them understand what this is..." ng-model="data.item">
+       </label>
+       <div class="list">
+           <label class="item item-select"> Type
+               <select ng-model="data.type" class="text-center" placeholder="">
+                   <option value="food">Food</option>
+                   <option value="housing">Housing</option>
+                   <option value="job">Job</option>
+               </select>
+           </label>
+           <label class="item item-input"> Capacity
+               <input type="number"  class="text-center" placeholder="how many positions, rooms, beds or plates can you offer a day..." ng-model="data.capacity">
+           </label>
+           <label class="item item-"> Description/Requirements
+               <textarea  class="text-center" placeholder="Provide detail and spell out the requirements" ng-model="data.description">
+
+               </textarea>
+           </label>
+           <label class="item item-input"> <i class="icon ion-location"></i>Where
+               <input type="text" class="text-center" placeholder="Address where this is available." ng-model="data.location">
+           </label>
+       </div>
    </ion-content>
 </div>
